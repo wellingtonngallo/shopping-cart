@@ -117,14 +117,17 @@ const Cart = (): JSX.Element => {
           }
         </tbody>
       </ProductTable>
-
-      <footer>
-        <button type="button" onClick={finalizeRequest}>Finalizar pedido</button>
-        <Total>
-          <span>TOTAL</span>
-          <strong>{total}</strong>
-        </Total>
-      </footer>
+      
+      {
+        cart.length > 0 &&
+          <footer>
+            <button type="button" onClick={finalizeRequest}>Finalizar pedido</button>
+            <Total>
+              <span>TOTAL</span>
+              <strong>{total}</strong>
+            </Total>
+          </footer>
+       }
     </Container>
   );
 };

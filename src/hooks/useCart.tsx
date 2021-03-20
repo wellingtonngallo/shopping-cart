@@ -46,6 +46,11 @@ export function CartProvider({ children }: CartProviderProps): JSX.Element {
   const finalizeRequest = () => {
     setCart([]);
 
+    localStorage.setItem(
+      '@RocketShoes:cart',
+      JSON.stringify([])
+    );
+
     toast.success('Pedido finalizado com sucesso');
   }
 
