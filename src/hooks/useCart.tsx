@@ -1,7 +1,7 @@
 import { createContext, ReactNode, useContext, useState } from 'react';
 import { toast } from 'react-toastify';
 import { api } from '../services/api';
-import { Product, Stock } from '../types';
+import { Product } from '../types';
 
 interface CartProviderProps {
   children: ReactNode;
@@ -17,6 +17,7 @@ interface CartContextData {
   addProduct: (productId: number) => Promise<void>;
   removeProduct: (productId: number) => void;
   updateProductAmount: ({ productId, amount }: UpdateProductAmount) => void;
+  finalizeRequest: () => void;
 }
 
 const CartContext = createContext<CartContextData>({} as CartContextData);
@@ -40,6 +41,12 @@ export function CartProvider({ children }: CartProviderProps): JSX.Element {
     }
     
     return data;
+  }
+
+  const finalizeRequest = () => {
+    setCart([]);
+
+    toast.success('Pedido finalizado com sucesso');
   }
 
   const findProductInTheCart = (productId: number) => {
@@ -137,14 +144,14 @@ export function CartProvider({ children }: CartProviderProps): JSX.Element {
       );
 
       setCart(newArray);
-    } catch (err) {
-      toast.error(err);
+    } catch  {
+      toast.error('Erro ao atualizar pedido do carrinho');
     }
   };
 
   return (
     <CartContext.Provider
-      value={{ cart, addProduct, removeProduct, updateProductAmount }}
+      value={{ cart, addProduct, removeProduct, updateProductAmount, finalizeRequest }}
     >
       {children}
     </CartContext.Provider>

@@ -1,5 +1,5 @@
-import { debug } from 'node:console';
-import React, { useMemo } from 'react';
+import { useMemo } from 'react';
+import { toast } from 'react-toastify';
 import {
   MdDelete,
   MdAddCircleOutline,
@@ -19,7 +19,7 @@ interface Product {
 }
 
 const Cart = (): JSX.Element => {
-  const { cart, removeProduct, updateProductAmount } = useCart();
+  const { cart, removeProduct, updateProductAmount, finalizeRequest } = useCart();
 
   const cartFormatted = useMemo(() => {
     return cart.map(product => ({
@@ -119,8 +119,7 @@ const Cart = (): JSX.Element => {
       </ProductTable>
 
       <footer>
-        <button type="button">Finalizar pedido</button>
-
+        <button type="button" onClick={finalizeRequest}>Finalizar pedido</button>
         <Total>
           <span>TOTAL</span>
           <strong>{total}</strong>
